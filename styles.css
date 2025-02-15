@@ -3,6 +3,7 @@ table {
     border: 2px solid rgb(200,200,200);
     letter-spacing: 1px;
     font-size: 0.8rem;
+    height: 100%;
 }
 
 td, th {
@@ -30,9 +31,15 @@ caption {
     padding: 10px;
 }
 
-button {
-    width: 100%;
-    height: 50px;
+.deleteDiv {
     padding: 0;
     margin: 0;
+}
+.deleteDiv button {
+    border: 1px solid rgb(190,190,190);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color:  rgb(235,235,235);
 }

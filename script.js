@@ -33,9 +33,13 @@ function displayBooks() {
         const col4 = document.createElement('td');
         col4.innerHTML = i.status;
         row.appendChild(col4);
-        let deleteRow = document.createElement('button');
-        deleteRow.className = rowNo;
+        let deleteRow = document.createElement('td');
+        deleteRow.className = 'deleteDiv';
+        let deleteButton = document.createElement('button');
+        deleteButton.className = rowNo;
+        deleteButton.innerHTML = "Delete";
         rowNo++;
+        deleteRow.appendChild(deleteButton);
         row.appendChild(deleteRow);
         tableBody.appendChild(row);
     }
