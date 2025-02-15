@@ -1,4 +1,5 @@
 // array to store the books
+let rowNo = 0;
 const myLibrary = [];
 
 // constructor for the book object
@@ -15,8 +16,35 @@ book.prototype.addBookToLibrary = function() {
 }
 
 function displayBooks() {
+    resetTable();
+    const tableBody = document.querySelector('tbody');
     for(const i of myLibrary) {
-        console.log(`Name of the book: ${i.title}\nAuthor: ${i.author}\nPages: ${i.pages}\nstatus: ${i.status}\n\n`);
+        let row = document.createElement('tr');
+        row.className = rowNo;
+        const col1 = document.createElement('td');
+        col1.innerHTML = i.title;
+        row.appendChild(col1);
+        const col2 = document.createElement('td');
+        col2.innerHTML = i.author;
+        row.appendChild(col2);
+        const col3 = document.createElement('td');
+        col3.innerHTML = i.pages;
+        row.appendChild(col3);
+        const col4 = document.createElement('td');
+        col4.innerHTML = i.status;
+        row.appendChild(col4);
+        let deleteRow = document.createElement('button');
+        deleteRow.className = rowNo;
+        rowNo++;
+        row.appendChild(deleteRow);
+        tableBody.appendChild(row);
+    }
+}
+
+function resetTable() {
+    let tableBody = document.querySelector('tbody');
+    while(tableBody.firstChild) {
+        tableBody.removeChild(tableBody.lastChild);
     }
 }
 
