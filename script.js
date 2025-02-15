@@ -16,12 +16,14 @@ book.prototype.addBookToLibrary = function() {
     displayBooks();
 }
 
+// changing the read/not read status
 book.prototype.changeStatus = function() {
     let status = this.status;
     this.status = status.toLowerCase() === "read"? "Not read yet" : "Read";
     displayBooks();
 }
 
+// displaying the books
 function displayBooks() {
     resetTable();
     const tableBody = document.querySelector('tbody');
@@ -50,6 +52,7 @@ function displayBooks() {
         let deleteButton = document.createElement('button');
         deleteButton.className = "Delete";
         deleteButton.innerHTML = "Delete";
+        // use set attribute to set the index to the buttons themselves for easiness to know what book to operate upon
         deleteButton.setAttribute("data-index", rowNo)
         deleteRow.appendChild(deleteButton);
         row.appendChild(deleteRow);
@@ -73,6 +76,7 @@ function displayBooks() {
     attatchEventListeners();
 }
 
+// resetting the table
 function resetTable() {
     rowNo = 0;
     let tableBody = document.querySelector('tbody');
@@ -81,12 +85,16 @@ function resetTable() {
     }
 }
 
+// deleting the row
 function deleteRow(index) {
     myLibrary.splice(index, 1);
     displayBooks();
 }
 
+// setting up event listeners (doing this in a function cause event listeners are only set once. Once gone they have to be reset. So put them in a function and call them after creating the table as if any ro is deleted, the event listeners for that row have to be reset)
 function attatchEventListeners() {
+    // use the get attribute to get the index set during the button creation in display table function
+    // for the delete buttons
     const deleteButtons = document.querySelectorAll('.Delete');
     deleteButtons.forEach((deleteButtons) => {
         deleteButtons.addEventListener('click', () => {
@@ -95,6 +103,7 @@ function attatchEventListeners() {
         });
     });
 
+    // for the status buttons
     const statusButton = document.querySelectorAll('.Status');
     statusButton.forEach((statusButton) => {
         statusButton.addEventListener('click', () => {
@@ -104,27 +113,34 @@ function attatchEventListeners() {
     });
 }
 
+// for the form part
 let add = document.querySelector('.NewBook');
 let close = document.querySelector('.Close');
 let dialog = document.querySelector('dialog');
 let form = document.querySelector('form');
 
+// open the dialog box
 add.addEventListener('click', () => {
     dialog.showModal();
 })
 
+// close the dialog box
 close.addEventListener('click', () => {
     dialog.close();
 })
 
+// when submit button is pressed
 form.addEventListener('submit', function(event) {
+    // to prevent the submit button from looking for a server by default
     event.preventDefault();
     
+    // getting the values from the text box
     let title = document.getElementById('Title').value;
     let author = document.getElementById('Author').value;
     let pages = document.getElementById('Pages').value;
     let status = document.getElementById('Status').value;
 
+    // adding a new book to the library
     let newBook = new book(title, author, pages, status);
     newBook.addBookToLibrary();
 
