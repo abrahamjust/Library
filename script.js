@@ -80,8 +80,9 @@ function resetTable() {
     }
 }
 
-function deleteRow() {
-    console.log("deleted");
+function deleteRow(index) {
+    myLibrary.splice(index, 1);
+    displayBooks();
 }
 
 const book1 = new book("Harry Potter and the philosopher's stone", "J.K Rowling", 320, "Read");
@@ -94,7 +95,10 @@ displayBooks();
 function attatchEventListeners() {
     const deleteButtons = document.querySelectorAll('.Delete');
     deleteButtons.forEach((deleteButtons) => {
-        deleteButtons.addEventListener('click', deleteRow);
+        deleteButtons.addEventListener('click', () => {
+            let index = deleteButtons.getAttribute("data-index");
+            deleteRow(index);
+        });
     });
 
     const statusButton = document.querySelectorAll('.Status');
