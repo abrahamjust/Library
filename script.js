@@ -15,12 +15,21 @@ book.prototype.addBookToLibrary = function() {
     myLibrary.push(this);
 }
 
+book.prototype.changeStatus = function() {
+    let status = this.status;
+    this.status = status.toLowerCase() === "read"? "Not read yet" : "Read";
+    displayBooks();
+}
+
 function displayBooks() {
     resetTable();
     const tableBody = document.querySelector('tbody');
     for(const i of myLibrary) {
+        // creating the row
         let row = document.createElement('tr');
         row.className = rowNo;
+
+        //creating the columns
         const col1 = document.createElement('td');
         col1.innerHTML = i.title;
         row.appendChild(col1);
@@ -33,28 +42,66 @@ function displayBooks() {
         const col4 = document.createElement('td');
         col4.innerHTML = i.status;
         row.appendChild(col4);
+
+        // deletion button
         let deleteRow = document.createElement('td');
         deleteRow.className = 'deleteDiv';
         let deleteButton = document.createElement('button');
-        deleteButton.className = rowNo;
+        deleteButton.className = "Delete";
         deleteButton.innerHTML = "Delete";
-        rowNo++;
+        deleteButton.setAttribute("data-index", rowNo)
         deleteRow.appendChild(deleteButton);
         row.appendChild(deleteRow);
+
+        // status change button
+        let changeStatus = document.createElement('td');
+        changeStatus.className = 'changeStatus';
+        let statusButton = document.createElement('button');
+        statusButton.className = "Status";
+        statusButton.innerHTML = "Change Status";
+        statusButton.setAttribute("data-index", rowNo)
+        changeStatus.appendChild(statusButton);
+        row.appendChild(changeStatus);
+
+        // updating rowNo and appending the row to the table body
+        rowNo++;
         tableBody.appendChild(row);
     }
+
+    // reattach the event listeners
+    attatchEventListeners();
 }
 
 function resetTable() {
+    rowNo = 0;
     let tableBody = document.querySelector('tbody');
     while(tableBody.firstChild) {
         tableBody.removeChild(tableBody.lastChild);
     }
 }
 
-const book1 = new book("Harry Potter and the philosopher's stone", "J.K Rowling", 320, "read");
+function deleteRow() {
+    console.log("deleted");
+}
+
+const book1 = new book("Harry Potter and the philosopher's stone", "J.K Rowling", 320, "Read");
 book1.addBookToLibrary();
 
-const book2 = new book("War and peace", "Leo Tolstoy", 1392, "read");
+const book2 = new book("War and peace", "Leo Tolstoy", 1392, "Read");
 book2.addBookToLibrary();
 displayBooks();
+
+function attatchEventListeners() {
+    const deleteButtons = document.querySelectorAll('.Delete');
+    deleteButtons.forEach((deleteButtons) => {
+        deleteButtons.addEventListener('click', deleteRow);
+    });
+
+    const statusButton = document.querySelectorAll('.Status');
+    statusButton.forEach((statusButton) => {
+        statusButton.addEventListener('click', () => {
+            let index = statusButton.getAttribute("data-index");
+            myLibrary[index].changeStatus();
+        });
+    });
+}
