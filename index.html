@@ -23,5 +23,28 @@
 
             </tbody>
         </table>
+        <button type="button" class="NewBook">Add another book</button>
+        <dialog>
+            <button type="button" class="Close">Close</button>
+            <form action="#" method="get">
+                <div>
+                    <label for="Title">Title: <span aria-label="required">*</span></label><br>
+                    <input type="text" name="Title" id="Title" required>
+                </div>
+                <div>
+                    <label for="Author">Author: <span aria-label="required">*</span></label><br>
+                    <input type="text" name="Author" id="Author" required>
+                </div>
+                <div>
+                    <label for="Status">Status (read / not read): <span aria-label="required">*</span></label><br>
+                    <input type="text" name="Status" id="Status" required>
+                </div>
+                <div>
+                    <label for="Pages">Pages: <span aria-label="required">*</span></label><br>
+                    <input type="text" name="Pages" id="Pages" required>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </dialog>
     </body>
 </html>

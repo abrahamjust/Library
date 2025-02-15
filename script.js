@@ -109,3 +109,15 @@ function attatchEventListeners() {
         });
     });
 }
+
+let add = document.querySelector('.NewBook');
+let close = document.querySelector('.Close');
+let dialog = document.querySelector('dialog');
+
+add.addEventListener('click', () => {
+    dialog.showModal();
+})
+
+close.addEventListener('click', () => {
+    dialog.close();
+})
