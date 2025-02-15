@@ -13,6 +13,7 @@ function book(title, author, pages, status) {
 // function to push the book
 book.prototype.addBookToLibrary = function() {
     myLibrary.push(this);
+    displayBooks();
 }
 
 book.prototype.changeStatus = function() {
@@ -85,13 +86,6 @@ function deleteRow(index) {
     displayBooks();
 }
 
-const book1 = new book("Harry Potter and the philosopher's stone", "J.K Rowling", 320, "Read");
-book1.addBookToLibrary();
-
-const book2 = new book("War and peace", "Leo Tolstoy", 1392, "Read");
-book2.addBookToLibrary();
-displayBooks();
-
 function attatchEventListeners() {
     const deleteButtons = document.querySelectorAll('.Delete');
     deleteButtons.forEach((deleteButtons) => {
@@ -113,6 +107,7 @@ function attatchEventListeners() {
 let add = document.querySelector('.NewBook');
 let close = document.querySelector('.Close');
 let dialog = document.querySelector('dialog');
+let form = document.querySelector('form');
 
 add.addEventListener('click', () => {
     dialog.showModal();
@@ -121,3 +116,29 @@ add.addEventListener('click', () => {
 close.addEventListener('click', () => {
     dialog.close();
 })
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    let title = document.getElementById('Title').value;
+    let author = document.getElementById('Author').value;
+    let pages = document.getElementById('Pages').value;
+    let status = document.getElementById('Status').value;
+
+    let newBook = new book(title, author, pages, status);
+    newBook.addBookToLibrary();
+
+    // close dialog box
+    dialog.close();
+
+    // Clear form fields
+    event.target.reset();
+});
+
+// defaults
+const book1 = new book("Harry Potter and the philosopher's stone", "J.K Rowling", 320, "Read");
+book1.addBookToLibrary();
+
+const book2 = new book("War and peace", "Leo Tolstoy", 1392, "Read");
+book2.addBookToLibrary();
+displayBooks();
