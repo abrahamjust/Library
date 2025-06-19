@@ -132,11 +132,54 @@ form.addEventListener('submit', function(event) {
     // to prevent the submit button from looking for a server by default
     event.preventDefault();
     
-    // getting the values from the text box
-    let title = document.getElementById('Title').value;
-    let author = document.getElementById('Author').value;
-    let pages = document.getElementById('Pages').value;
-    let status = document.getElementById('Status').value;
+    // getting the values and validating them
+    let titleInput = document.getElementById('Title');
+    let title;
+    if(titleInput.validity.valueMissing) {
+        missingValueError(titleInput);
+        titleInput.reportValidity();
+        return;
+    } else {
+        titleInput.setCustomValidity('');
+        title = titleInput.value;
+    }
+
+    let authorInput = document.getElementById('Author');
+    let author;
+    if(authorInput.validity.valueMissing) {
+        missingValueError(authorInput);
+        authorInput.reportValidity();
+        return;
+    } else {
+        authorInput.setCustomValidity('');
+        author = authorInput.value;
+    }
+    let pagesInput = document.getElementById('Pages');
+    let pages;
+    if(pagesInput.validity.valueMissing) {
+        missingValueError(pagesInput);
+        pagesInput.reportValidity();
+        return;
+    } else {
+        pagesInput.setCustomValidity('');
+        pages = pagesInput.value;
+    }
+    let statusInput = document.getElementById('Status');
+    let status;
+    if(statusInput.validity.valueMissing) {
+        missingValueError(statusInput);
+        statusInput.reportValidity();
+        return;
+    } else {
+        status = statusInput.value;
+        if(status.toLowerCase() != 'read' && status.toLowerCase() != 'not read') {
+            statusInput.setCustomValidity("the input must be either read / not read");
+            statusInput.reportValidity();
+            return;
+        } else {
+            statusInput.setCustomValidity('');
+        }
+    }
 
     // adding a new book to the library
     let newBook = new Book(title, author, pages, status);
@@ -148,6 +191,10 @@ form.addEventListener('submit', function(event) {
     // Clear form fields
     event.target.reset();
 });
+
+function missingValueError(element) {
+    element.setCustomValidity("enter value for this field, missing values not allowed");
+}
 
 // defaults
 const book1 = new Book("Harry Potter and the philosopher's stone", "J.K Rowling", 320, "Read");
